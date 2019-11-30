@@ -7,12 +7,14 @@ ini_set('error_reporting', E_ALL);
 include_once 'libs/simple_html_dom.php';
 include_once 'libs/curl_query.php';
 include_once 'libs/charset.php';
+include_once 'libs/pattern.php';
 //include_once 'libs/array.php';
 
 
 exec('chcp 65001');
 $array = array('http://gtrk-saratov.ru','www.novosti-saratova.ru','http://saratov-segodnya.ru','http://sp-64.ru','http://sovetov.su','https://www.kommersant.ru/regions/64','http://medialeaks64.ru','http://g-64.ru/official.php','http://reporter64.ru','http://izvestia64.ru','http://www.saratovmer.ru','https://saratov.gov.ru','http://akirp.ru','https://vladeilegko.ru','https://news-life.ru','https://123ru.net/saratov','http://saratov-news.net','http://www.mfc64.ru','http://sartpp.ru/ru','http://lizagubernii.ru');
-$text = 'Кадастр|Ахмеров|Терехова|Варакина|Росреестр';
+//$text = 'Кадастр|Ахмеров|Терехова|Варакина|Росреестр|Гришин';
+
 $outs[] = [];
 echo "В массиве " . count($array) . " адресов" . "<br>";
 
@@ -65,7 +67,7 @@ foreach ($array as $arr) {
 
         if ((preg_match($pattern, $html2, $out)) && !in_array($link, $outs) && !in_array($link, $a)) {
             $outs[] = $link;
-            $dt = date('d-m-Y H:i:s');
+            $dt = date('d.m.Y H:i:s');
             $sql = "INSERT INTO links(dt,a) VALUES('$dt','$link')";
             $res = $db->exec($sql);
 

@@ -7,12 +7,14 @@ ini_set('error_reporting', E_ALL);
 include_once 'libs/simple_html_dom.php';
 include_once 'libs/curl_query.php';
 include_once 'libs/charset.php';
+include_once 'libs/pattern.php';
 //include_once 'libs/array.php';
 
 
 exec('chcp 65001');
-$array = array('http://dergachi.sarmo.ru','http://piterka.sarmo.ru','http://atkarskgazeta.ru','http://ershov.sarmo.ru','http://moyaokruga.ru','http://moyaokruga.ru/step','http://www.novouzensk.ru','http://adm-perelyb.ru','http://arkadak.sarmo.ru','http://hvalynsk.sarmo.ru','http://krasny-kut.ru','https://volsklife.ru','http://bkarabulak.sarmo.ru','http://натальино.рф','http://rtishevo.sarmo.ru','http://sam64.ru','http://algay.sarmo.ru','http://www.engels-city.ru/news-line');
-$text = 'Кадастр|Ахмеров|Терехова|Варакина|Росреестр';
+$array = array('http://dergachi.sarmo.ru','http://piterka.sarmo.ru','http://atkarskgazeta.ru','http://ershov.sarmo.ru','http://moyaokruga.ru/SelectRegion.aspx?id=90','http://moyaokruga.ru/step','http://www.novouzensk.ru','http://arkadak.sarmo.ru','http://hvalynsk.sarmo.ru','http://krasny-kut.ru','https://volsklife.ru','http://bkarabulak.sarmo.ru','http://натальино.рф','http://rtishevo.sarmo.ru','http://sam64.ru','http://algay.sarmo.ru','http://www.engels-city.ru/news-line','https://news.sarbc.ru');
+//$text = 'Кадастр|Ахмеров|Терехова|Варакина|Росреестр|Гришин';
+
 $outs[] = [];
 echo "В массиве " . count($array) . " адресов" . "<br>";
 
@@ -65,7 +67,7 @@ foreach ($array as $arr) {
 
         if ((preg_match($pattern, $html2, $out)) && !in_array($link, $outs) && !in_array($link, $a)) {
             $outs[] = $link;
-            $dt = date('d-m-Y H:i:s');
+            $dt = date('d.m.Y H:i:s');
             $sql = "INSERT INTO links(dt,a) VALUES('$dt','$link')";
             $res = $db->exec($sql);
 
